@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const DashboardPage = ({ user, onNavigate, onSignOut }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const [activeTab, setActiveTab] = React.useState('overview');
 
   // Mock data
@@ -58,7 +60,7 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
   return (
     <div className="pt-nav" style={{ minHeight: '100vh' }}>
       {/* ─── HEADER ─── */}
-      <div style={{ background: 'linear-gradient(180deg, var(--dark-brown), var(--espresso))', borderBottom: '1px solid var(--border-gold)', padding: '40px 40px 0' }}>
+      <div style={{ background: 'linear-gradient(180deg, var(--dark-brown), var(--espresso))', borderBottom: '1px solid var(--border-gold)', padding: `40px ${px} 0` }}>
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           {/* User info row */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, marginBottom: 32 }}>
@@ -106,13 +108,13 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
       </div>
 
       {/* ─── CONTENT ─── */}
-      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 40px' }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: `48px ${px}` }}>
 
         {/* ═══ OVERVIEW TAB ═══ */}
         {activeTab === 'overview' && (
           <div>
             {/* Stats row */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 48 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 16, marginBottom: 48 }}>
               {[
                 { label: 'Visitas Totales', value: pastCuts.length + appts.filter(a => a.status === 'confirmado').length, icon: '✂' },
                 { label: 'Puntos de Fidelidad', value: points, icon: '🏆' },
@@ -128,7 +130,7 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
             </div>
 
             {/* Next appointment + loyalty side by side */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginBottom: 40 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', gap: 24, marginBottom: 40 }}>
               {/* Next appt */}
               <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 10, padding: '28px' }}>
                 <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16 }}>Próxima Cita</div>
@@ -166,7 +168,7 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
 
             {/* Recent cuts preview */}
             <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 20 }}>Cortes Recientes</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 14 }}>
               {pastCuts.slice(0, 4).map((c, i) => (
                 <div key={i} className="card">
                   <ImgPlaceholder label={c.placeholder} height={140} style={{ borderRadius: 0 }} />
@@ -235,7 +237,7 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
           <div>
             <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Historial de Cortes</h2>
             <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 36 }}>Cada sesión, fotografiada y guardada.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: 20 }}>
               {pastCuts.map((c, i) => (
                 <div key={i} className="card" style={{ display: 'flex', overflow: 'hidden' }}>
                   <ImgPlaceholder label={c.placeholder} width={160} height={140} style={{ borderRadius: 0, flexShrink: 0 }} />
@@ -282,7 +284,7 @@ const DashboardPage = ({ user, onNavigate, onSignOut }) => {
 
             {/* Rewards */}
             <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 20 }}>Canjear Recompensas</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: 16 }}>
               {rewards.map((r, i) => (
                 <div key={i} style={{
                   background: 'var(--surface)',

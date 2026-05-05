@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const ContactPage = ({ onNavigate, user }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const [step, setStep] = React.useState(1); // 1: tipo, 2: detalles, 3: confirmado
   const [serviceType, setServiceType] = React.useState(''); // 'haircut' | 'tattoo'
   const [form, setForm] = React.useState({
@@ -56,7 +58,7 @@ const ContactPage = ({ onNavigate, user }) => {
       <div style={{
         background: 'linear-gradient(180deg, var(--dark-brown) 0%, var(--espresso) 100%)',
         borderBottom: '1px solid var(--border-gold)',
-        padding: 'calc(var(--nav-h) + 80px) 40px 60px',
+        padding: `calc(var(--nav-h) + ${isMobile ? '40px' : '80px'}) ${px} 60px`,
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -94,7 +96,7 @@ const ContactPage = ({ onNavigate, user }) => {
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 40px', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 80 }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: `${isMobile ? '40px' : '80px'} ${px}`, display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1.4fr', gap: isMobile ? 40 : 80 }}>
 
         {/* ─── LEFT: Info ─── */}
         <div>
@@ -194,7 +196,7 @@ const ContactPage = ({ onNavigate, user }) => {
                 ¿Qué tipo de servicio te interesa hoy?
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                 {[
                   { id: 'haircut', icon: '✂', label: 'Corte & Grooming', desc: 'Fades, tapers, barba y más' },
                   { id: 'tattoo', icon: '◆', label: 'Tatuaje', desc: 'Consulta y sesión de tinta' },
@@ -261,7 +263,7 @@ const ContactPage = ({ onNavigate, user }) => {
                         {tattooStyles.map(s => <option key={s}>{s}</option>)}
                       </select>
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                       <div>
                         <label style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8 }}>Tamaño *</label>
                         <select className="input" value={form.size} onChange={e => set('size', e.target.value)} required>
@@ -277,7 +279,7 @@ const ContactPage = ({ onNavigate, user }) => {
                   </>
                 )}
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
                   <div>
                     <label style={{ display: 'block', fontSize: 10, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8 }}>Fecha *</label>
                     <input className="input" type="date" value={form.date} onChange={e => set('date', e.target.value)} min={new Date().toISOString().split('T')[0]} required />

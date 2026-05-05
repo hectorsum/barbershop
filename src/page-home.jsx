@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const HomePage = ({ onNavigate, user }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const [slide, setSlide] = React.useState(0);
   const [animating, setAnimating] = React.useState(false);
   const slides = [
@@ -91,14 +93,15 @@ const HomePage = ({ onNavigate, user }) => {
         <div style={{
           maxWidth: 1200,
           margin: '0 auto',
-          padding: '0 40px',
+          padding: `0 ${px}`,
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 60,
+          gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr',
+          gap: isMobile ? 32 : 60,
           alignItems: 'center',
           width: '100%',
           minWidth: 0,
           flex: 1,
+          paddingTop: isTablet ? 'var(--nav-h)' : 0,
           opacity: animating ? 0 : 1,
           transform: animating ? 'translateY(16px)' : 'translateY(0)',
           transition: 'opacity 0.4s ease, transform 0.4s ease',
@@ -230,7 +233,7 @@ const HomePage = ({ onNavigate, user }) => {
           </div>
 
           {/* Decorative side — abstract barbershop visual */}
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', maxHeight: 640 }}>
+          <div style={{ position: 'relative', display: isTablet ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center', height: '80vh', maxHeight: 640 }}>
             {/* Warm glow */}
             <div style={{
               position: 'absolute', inset: 0,
@@ -286,7 +289,7 @@ const HomePage = ({ onNavigate, user }) => {
 
       {/* ─── SERVICES STRIP ─── */}
       <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border-gold)', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: `0 ${px}`, display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 0 }}>
           {services.map((s, i) => (
             <button key={i} onClick={() => onNavigate(s.page)} style={{
               background: 'none',
@@ -308,7 +311,7 @@ const HomePage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── ABOUT TEASER ─── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: `${isMobile ? '48px' : '80px'} ${px}`, display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', gap: isMobile ? 32 : 80, alignItems: 'center' }}>
         <div style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}>
           {/* Glow behind photo */}
           <div style={{
@@ -363,13 +366,13 @@ const HomePage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── TESTIMONIALS ─── */}
-      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '72px 40px' }}>
+      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: `${isMobile ? '48px' : '72px'} ${px}` }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div className="section-header" style={{ marginBottom: 40 }}>
             <span className="section-label">Palabras de Clientes</span>
             <h2 className="section-title">Lo que <em>Dicen</em></h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)', gap: 16 }}>
             {testimonials.map((t, i) => (
               <div key={i} style={{ padding: '24px 20px', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)', borderRadius: 8 }}>
                 <div style={{ display: 'flex', gap: 2, marginBottom: 14 }}>
@@ -394,7 +397,7 @@ const HomePage = ({ onNavigate, user }) => {
       <div style={{
         background: 'linear-gradient(135deg, var(--dark-brown), var(--mid-brown))',
         borderTop: '1px solid var(--border-gold)',
-        padding: '80px 40px',
+        padding: `${isMobile ? '48px' : '80px'} ${px}`,
         textAlign: 'center',
       }}>
         <span className="section-label">¿Listo?</span>

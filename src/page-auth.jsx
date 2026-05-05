@@ -6,6 +6,7 @@ import React from 'react'
 // ============================================
 
 const AuthPage = ({ mode = 'signin', onNavigate, onAuthSuccess }) => {
+  const { isMobile, isTablet } = useViewport();
   const [view, setView] = React.useState(mode); // 'signin' | 'signup'
   const [form, setForm] = React.useState({ name: '', username: '', email: '', password: '', confirm: '' });
   const [errors, setErrors] = React.useState({});
@@ -53,13 +54,13 @@ const AuthPage = ({ mode = 'signin', onNavigate, onAuthSuccess }) => {
       {/* Background decorative */}
       <div style={{ position: 'fixed', inset: 0, background: 'radial-gradient(ellipse at 30% 50%, rgba(44,26,14,0.6) 0%, transparent 60%), radial-gradient(ellipse at 70% 50%, rgba(26,16,8,0.8) 0%, transparent 60%)', pointerEvents: 'none' }} />
 
-      <div style={{ width: '100%', maxWidth: 960, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-gold)', position: 'relative', zIndex: 1 }}>
+      <div style={{ width: '100%', maxWidth: isTablet ? 480 : 960, display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', gap: 0, borderRadius: 16, overflow: 'hidden', border: '1px solid var(--border-gold)', position: 'relative', zIndex: 1 }}>
 
-        {/* ─── LEFT: Brand panel ─── */}
+        {/* ─── LEFT: Brand panel (hidden on mobile/tablet) ─── */}
         <div style={{
           background: 'linear-gradient(160deg, var(--dark-brown) 0%, var(--espresso) 100%)',
           padding: '60px 48px',
-          display: 'flex',
+          display: isTablet ? 'none' : 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
           borderRight: '1px solid var(--border-gold)',
@@ -104,7 +105,7 @@ const AuthPage = ({ mode = 'signin', onNavigate, onAuthSuccess }) => {
         </div>
 
         {/* ─── RIGHT: Form ─── */}
-        <div style={{ background: 'var(--surface)', padding: '60px 48px' }}>
+        <div style={{ background: 'var(--surface)', padding: isMobile ? '32px 20px' : '60px 48px' }}>
           {/* Toggle */}
           <div style={{ display: 'flex', background: 'rgba(255,255,255,0.04)', borderRadius: 8, padding: 4, marginBottom: 40 }}>
             {['signin', 'signup'].map(v => (

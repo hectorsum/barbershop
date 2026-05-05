@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const AboutPage = ({ onNavigate }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const milestones = [
     { year: '2015', title: 'Primera Silla', desc: 'Abrió su primer puesto en una barbería del barrio donde creció. La fama se corrió rápido.' },
     { year: '2018', title: 'Comienza la Tinta', desc: 'Después de años dibujando por su cuenta, Fernando tomó un aprendizaje formal en tatuaje — dos oficios, una visión.' },
@@ -27,7 +29,7 @@ const AboutPage = ({ onNavigate }) => {
       <div style={{
         background: 'linear-gradient(180deg, var(--dark-brown) 0%, var(--espresso) 100%)',
         borderBottom: '1px solid var(--border-gold)',
-        padding: 'calc(var(--nav-h) + 80px) 40px 60px',
+        padding: `calc(var(--nav-h) + ${isMobile ? '40px' : '80px'}) ${px} 60px`,
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -64,7 +66,7 @@ const AboutPage = ({ onNavigate }) => {
       </div>
 
       {/* ─── MAIN BIO ─── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '100px 40px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: `${isMobile ? '48px' : '100px'} ${px}`, display: 'grid', gridTemplateColumns: isTablet ? '1fr' : '1fr 1fr', gap: isMobile ? 32 : 80, alignItems: 'start' }}>
         <div>
           <img
             src="fernando-barber.png"
@@ -114,7 +116,7 @@ const AboutPage = ({ onNavigate }) => {
 
 
       {/* ─── TIMELINE ─── */}
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '100px 40px' }}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: `${isMobile ? '48px' : '100px'} ${px}` }}>
         <div className="section-header">
           <span className="section-label">Trayectoria</span>
           <h2 className="section-title">El <em>Camino</em></h2>
@@ -145,7 +147,7 @@ const AboutPage = ({ onNavigate }) => {
       {/* ─── CTA ─── */}
       <div style={{
         borderTop: '1px solid var(--border-gold)',
-        padding: '60px 40px',
+        padding: `60px ${px}`,
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',

@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const TattoosPage = ({ onNavigate, user }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const [activeStyle, setActiveStyle] = React.useState('all');
   const [lightboxOpen, setLightboxOpen] = React.useState(false);
   const [lightboxItem, setLightboxItem] = React.useState(null);
@@ -71,7 +73,7 @@ const TattoosPage = ({ onNavigate, user }) => {
       <div style={{
         background: 'linear-gradient(160deg, #0D0810 0%, #1A1008 50%, #0D0810 100%)',
         borderBottom: '1px solid rgba(155, 127, 212, 0.3)',
-        padding: 'calc(var(--nav-h) + 80px) 40px 60px',
+        padding: `calc(var(--nav-h) + ${isMobile ? '40px' : '80px'}) ${px} 60px`,
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -107,12 +109,12 @@ const TattoosPage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── STYLE CARDS ─── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 40px 40px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: `${isMobile ? '48px' : '80px'} ${px} 40px` }}>
         <div className="section-header" style={{ marginBottom: 40 }}>
           <span className="section-label">Especialidades</span>
           <h2 className="section-title">Estilos que Fernando <em>Domina</em></h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : isTablet ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)', gap: 16 }}>
           {tattooStyles.map((s, i) => (
             <button key={i} onClick={() => setActiveStyle(s.name.toLowerCase().replace(' ', '-'))} style={{
               background: activeStyle === s.name.toLowerCase().replace(' ', '-') ? 'rgba(155,127,212,0.12)' : 'var(--surface)',
@@ -132,7 +134,7 @@ const TattoosPage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── GALLERY ─── */}
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '20px 40px 100px' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: `20px ${px} 100px` }}>
         {/* Filter bar */}
         <div style={{ display: 'flex', gap: 8, marginBottom: 40, flexWrap: 'wrap' }}>
           {styles.map(s => (
@@ -156,7 +158,7 @@ const TattoosPage = ({ onNavigate, user }) => {
         </div>
 
         {/* Masonry-style grid */}
-        <div style={{ columns: 3, columnGap: 16 }}>
+        <div style={{ columns: isMobile ? 1 : isTablet ? 2 : 3, columnGap: 16 }}>
           {visible.map((p, i) => (
             <div key={i} onClick={() => openLightbox(p)} className="card" style={{
               marginBottom: 16,
@@ -182,7 +184,7 @@ const TattoosPage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── PRICING / CONTACT ─── */}
-      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '80px 40px' }}>
+      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: `${isMobile ? '48px' : '80px'} ${px}` }}>
         <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
           <span className="section-label">Precios</span>
           <h2 className="section-title" style={{ marginBottom: 16 }}>Cada Pieza es <em>Única</em></h2>

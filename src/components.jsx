@@ -4,6 +4,17 @@ import React from 'react'
 // SHARED COMPONENTS — Fernando Barber & Tattoo
 // ============================================
 
+// ─── RESPONSIVE HOOK ───
+const useViewport = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const handler = () => setWidth(window.innerWidth);
+    window.addEventListener('resize', handler, { passive: true });
+    return () => window.removeEventListener('resize', handler);
+  }, []);
+  return { isMobile: width <= 480, isTablet: width <= 768, width };
+};
+
 // ─── LOGO SVG ───
 const LogoIcon = ({ size = 36 }) => (
   <svg width={size} height={size} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -323,4 +334,4 @@ const ImgPlaceholder = ({ label, width = '100%', height = 280, style = {} }) => 
 );
 
 // Export to window for cross-script access
-Object.assign(window, { Nav, Footer, Ornament, ImgPlaceholder, LogoIcon });
+Object.assign(window, { Nav, Footer, Ornament, ImgPlaceholder, LogoIcon, useViewport });

@@ -5,6 +5,8 @@ import React from 'react'
 // ============================================
 
 const HaircutsPage = ({ onNavigate, user }) => {
+  const { isMobile, isTablet } = useViewport();
+  const px = isMobile ? '16px' : isTablet ? '24px' : '40px';
   const [activeFilter, setActiveFilter] = React.useState('all');
 
   const filters = ['all', 'fades', 'classic', 'barba', 'niños'];
@@ -53,7 +55,7 @@ const HaircutsPage = ({ onNavigate, user }) => {
       <div style={{
         background: 'linear-gradient(180deg, var(--dark-brown) 0%, var(--espresso) 100%)',
         borderBottom: '1px solid var(--border-gold)',
-        padding: 'calc(var(--nav-h) + 80px) 40px 60px',
+        padding: `calc(var(--nav-h) + ${isMobile ? '40px' : '80px'}) ${px} 60px`,
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
@@ -119,7 +121,7 @@ const HaircutsPage = ({ onNavigate, user }) => {
         </div>
 
         {/* Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(3, 1fr)', gap: 20 }}>
           {visible.map((c, i) => (
             <div key={i} className="card" style={{ cursor: 'default' }}>
               <ImgPlaceholder label={c.placeholder} height={220} style={{ borderRadius: 0 }} />
@@ -134,14 +136,14 @@ const HaircutsPage = ({ onNavigate, user }) => {
       </div>
 
       {/* ─── PRICING ─── */}
-      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '100px 40px' }}>
+      <div style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: `${isMobile ? '48px' : '100px'} ${px}` }}>
         <div style={{ maxWidth: 1000, margin: '0 auto' }}>
           <div className="section-header">
             <span className="section-label">Precios</span>
             <h2 className="section-title">Tarifas <em>Claras</em></h2>
           </div>
           <Ornament />
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
             {pricing.map((p, i) => (
               <div key={i} style={{
                 background: p.highlight ? 'linear-gradient(145deg, #2C1A0E, #4A2C1A)' : 'var(--surface)',
@@ -187,7 +189,7 @@ const HaircutsPage = ({ onNavigate, user }) => {
 
       {/* ─── BOOKING NUDGE ─── */}
       {!user && (
-        <div style={{ padding: '60px 40px', textAlign: 'center' }}>
+        <div style={{ padding: `60px ${px}`, textAlign: 'center' }}>
           <p style={{ fontFamily: 'var(--font-serif)', fontSize: 18, color: 'var(--text-muted)', marginBottom: 24 }}>
             ¿Listo para reservar? Crea tu cuenta y agenda tu primera cita en minutos.
           </p>

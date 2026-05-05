@@ -17,7 +17,7 @@ import './page-dashboard.jsx'
 import './tweaks-panel.jsx'
 
 // Import components from window into module scope for JSX
-const { Nav, Footer, LogoIcon, Ornament, ImgPlaceholder } = window
+const { Nav, Footer, LogoIcon, Ornament, ImgPlaceholder, useViewport } = window
 const { HomePage, AboutPage, HaircutsPage, TattoosPage, ContactPage, AuthPage, DashboardPage } = window
 const { TweaksPanel, TweakSection, TweakColor, TweakToggle, TweakRadio, TweakButton } = window
 
