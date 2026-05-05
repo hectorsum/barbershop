@@ -1,3 +1,5 @@
+import React from 'react'
+
 // ============================================
 // SHARED COMPONENTS — Fernando Barber & Tattoo
 // ============================================

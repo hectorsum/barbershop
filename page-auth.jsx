@@ -1,3 +1,5 @@
+import React from 'react'
+
 // ============================================
 // AUTH PAGES — Sign In / Sign Up
 // Fernando Barber & Tattoo

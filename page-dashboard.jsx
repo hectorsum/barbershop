@@ -1,3 +1,5 @@
+import React from 'react'
+
 // ============================================
 // CLIENT DASHBOARD — Fernando Barber & Tattoo
 // ============================================

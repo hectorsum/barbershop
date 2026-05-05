@@ -1,3 +1,5 @@
+import React from 'react'
+
 // ============================================
 // ABOUT PAGE — Fernando Barber & Tattoo
 // ============================================

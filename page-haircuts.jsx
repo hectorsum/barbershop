@@ -1,3 +1,5 @@
+import React from 'react'
+
 // ============================================
 // HAIRCUTS PAGE — Fernando Barber & Tattoo
 // ============================================
