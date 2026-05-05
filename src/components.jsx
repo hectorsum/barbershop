@@ -24,6 +24,7 @@ const LogoIcon = ({ size = 36 }) => (
 const Nav = ({ currentPage = 'home', user = null, onNavigate, onSignOut }) => {
   const [scrolled, setScrolled] = React.useState(false);
   const [trabajosOpen, setTrabajosOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const trabajosRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -54,17 +55,23 @@ const Nav = ({ currentPage = 'home', user = null, onNavigate, onSignOut }) => {
     { id: 'contact', label: 'Contacto' },
   ];
 
-  return (
-    <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
-      <a className="nav-logo" href="#" onClick={e => { e.preventDefault(); onNavigate('home'); }}>
-        <LogoIcon size={36} />
-        <div className="nav-logo-text">
-          <span className="name">Fernando</span>
-          <span className="tagline">Barber &amp; Tattoo</span>
-        </div>
-      </a>
+  const handleNavClick = (page) => {
+    onNavigate(page);
+    setMobileMenuOpen(false);
+  };
 
-      <ul className="nav-links">
+  return (
+    <>
+      <nav className={`nav${scrolled ? ' scrolled' : ''}`}>
+        <a className="nav-logo" href="#" onClick={e => { e.preventDefault(); handleNavClick('home'); }}>
+          <LogoIcon size={36} />
+          <div className="nav-logo-text">
+            <span className="name">Fernando</span>
+            <span className="tagline">Barber &amp; Tattoo</span>
+          </div>
+        </a>
+
+        <ul className="nav-links">
         {links.map(l => l.dropdown ? (
           <li key={l.id} ref={trabajosRef} style={{ position: 'relative' }}>
             <a
@@ -133,13 +140,34 @@ const Nav = ({ currentPage = 'home', user = null, onNavigate, onSignOut }) => {
         ))}
       </ul>
 
+      {/* Hamburger menu button for mobile */}
+      <button
+        className="nav-hamburger"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        style={{
+          display: 'none',
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          padding: '8px',
+          color: 'var(--text)',
+          zIndex: 999,
+        }}
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ transition: 'transform 0.3s' }}>
+          <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="3" y1="12" x2="21" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="3" y1="18" x2="21" y2="18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      </button>
+
       <div className="nav-actions">
         {user ? (
           <>
             <button
               className="btn btn-outline"
               style={{ fontSize: '11px', padding: '8px 16px' }}
-              onClick={() => onNavigate('dashboard')}
+              onClick={() => handleNavClick('dashboard')}
             >
               {user.name}
             </button>
@@ -149,16 +177,84 @@ const Nav = ({ currentPage = 'home', user = null, onNavigate, onSignOut }) => {
           </>
         ) : (
           <>
-            <button className="btn btn-outline" style={{ fontSize: '11px', padding: '8px 16px' }} onClick={() => onNavigate('signin')}>
+            <button className="btn btn-outline" style={{ fontSize: '11px', padding: '8px 16px' }} onClick={() => handleNavClick('signin')}>
               Iniciar Sesión
             </button>
-            <button className="btn btn-gold" style={{ fontSize: '11px', padding: '8px 16px' }} onClick={() => onNavigate('signup')}>
+            <button className="btn btn-gold" style={{ fontSize: '11px', padding: '8px 16px' }} onClick={() => handleNavClick('signup')}>
               Únete
             </button>
           </>
         )}
       </div>
     </nav>
+
+    {/* Mobile menu */}
+    {mobileMenuOpen && (
+      <div style={{
+        position: 'fixed',
+        top: 'var(--nav-h)',
+        left: 0,
+        right: 0,
+        background: 'rgba(14, 14, 14, 0.98)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid var(--border-gold)',
+        zIndex: 999,
+        padding: '20px',
+        maxHeight: 'calc(100vh - var(--nav-h))',
+        overflowY: 'auto',
+      }}>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          {links.map(l => (
+            <li key={l.id}>
+              {l.dropdown ? (
+                <>
+                  <div style={{ padding: '12px 0', color: 'var(--text-muted)', fontSize: '13px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em' }}>
+                    {l.label}
+                  </div>
+                  {l.dropdown.map(sub => (
+                    <a
+                      key={sub.id}
+                      href="#"
+                      onClick={e => { e.preventDefault(); handleNavClick(sub.id); }}
+                      style={{
+                        display: 'block',
+                        padding: '10px 0 10px 16px',
+                        color: currentPage === sub.id ? 'var(--gold)' : 'var(--text-muted)',
+                        textDecoration: 'none',
+                        fontSize: '12px',
+                        borderLeft: currentPage === sub.id ? '2px solid var(--gold)' : 'transparent',
+                        transition: 'color 0.2s',
+                      }}
+                    >
+                      {sub.label}
+                    </a>
+                  ))}
+                </>
+              ) : (
+                <a
+                  href="#"
+                  onClick={e => { e.preventDefault(); handleNavClick(l.id); }}
+                  style={{
+                    display: 'block',
+                    padding: '12px 0',
+                    color: currentPage === l.id ? 'var(--gold)' : 'var(--text-muted)',
+                    textDecoration: 'none',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.12em',
+                    transition: 'color 0.2s',
+                  }}
+                >
+                  {l.label}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    </>
   );
 };
 
