@@ -5,16 +5,16 @@ import ReactDOM from 'react-dom/client'
 window.React = React
 window.ReactDOM = ReactDOM
 
-import '../shared.css'
-import '../components.jsx'
-import '../page-home.jsx'
-import '../page-about.jsx'
-import '../page-haircuts.jsx'
-import '../page-tattoos.jsx'
-import '../page-contact.jsx'
-import '../page-auth.jsx'
-import '../page-dashboard.jsx'
-import '../tweaks-panel.jsx'
+import './shared.css'
+import './components.jsx'
+import './page-home.jsx'
+import './page-about.jsx'
+import './page-haircuts.jsx'
+import './page-tattoos.jsx'
+import './page-contact.jsx'
+import './page-auth.jsx'
+import './page-dashboard.jsx'
+import './tweaks-panel.jsx'
 
 // Import components from window into module scope for JSX
 const { Nav, Footer, LogoIcon, Ornament, ImgPlaceholder } = window
