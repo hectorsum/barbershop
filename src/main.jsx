@@ -16,6 +16,11 @@ import '../page-auth.jsx'
 import '../page-dashboard.jsx'
 import '../tweaks-panel.jsx'
 
+// Import components from window into module scope for JSX
+const { Nav, Footer, LogoIcon, Ornament, ImgPlaceholder } = window
+const { HomePage, AboutPage, HaircutsPage, TattoosPage, ContactPage, AuthPage, DashboardPage } = window
+const { TweaksPanel, TweakSection, TweakColor, TweakToggle, TweakRadio, TweakButton } = window
+
 const TWEAK_DEFAULTS = {
   "accentColor": "#d3b050",
   "fontStyle": "classic",
@@ -80,17 +85,17 @@ const App = () => {
   const renderPage = () => {
     const props = { onNavigate: navigate, user, onSignOut: handleSignOut };
     switch (page) {
-      case 'home':      return <HomePage {...props} />;
-      case 'about':     return <AboutPage {...props} />;
-      case 'haircuts':  return <HaircutsPage {...props} />;
-      case 'tattoos':   return <TattoosPage {...props} />;
-      case 'contact':   return <ContactPage {...props} />;
-      case 'signin':    return <AuthPage mode="signin" {...props} onAuthSuccess={handleAuthSuccess} />;
-      case 'signup':    return <AuthPage mode="signup" {...props} onAuthSuccess={handleAuthSuccess} />;
+      case 'home': return <HomePage {...props} />;
+      case 'about': return <AboutPage {...props} />;
+      case 'haircuts': return <HaircutsPage {...props} />;
+      case 'tattoos': return <TattoosPage {...props} />;
+      case 'contact': return <ContactPage {...props} />;
+      case 'signin': return <AuthPage mode="signin" {...props} onAuthSuccess={handleAuthSuccess} />;
+      case 'signup': return <AuthPage mode="signup" {...props} onAuthSuccess={handleAuthSuccess} />;
       case 'dashboard': return user
         ? <DashboardPage {...props} />
         : <AuthPage mode="signin" {...props} onAuthSuccess={handleAuthSuccess} />;
-      default:          return <HomePage {...props} />;
+      default: return <HomePage {...props} />;
     }
   };
 
